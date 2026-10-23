@@ -1,0 +1,25 @@
+{
+  "Files": [
+    {
+      "Id": "D:\\EmployeeTaskManagementAPI\\wwwroot\\index.html",
+      "PackagePath": "staticwebassets\\index.html"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.EmployeeTaskManagementAPI.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.EmployeeTaskManagementAPI.props",
+      "PackagePath": "build\\EmployeeTaskManagementAPI.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.EmployeeTaskManagementAPI.props",
+      "PackagePath": "buildMultiTargeting\\EmployeeTaskManagementAPI.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.EmployeeTaskManagementAPI.props",
+      "PackagePath": "buildTransitive\\EmployeeTaskManagementAPI.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

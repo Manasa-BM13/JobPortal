@@ -1,0 +1,39 @@
+{
+  "Version": 1,
+  "Hash": "c/nTBsShBqxrKNnh+/g9zrH/ok8WtIYNpa7MBc7ozwg=",
+  "Source": "EmployeeTaskManagementAPI",
+  "BasePath": "_content/EmployeeTaskManagementAPI",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "EmployeeTaskManagementAPI\\wwwroot",
+      "Source": "EmployeeTaskManagementAPI",
+      "ContentRoot": "D:\\EmployeeTaskManagementAPI\\wwwroot\\",
+      "BasePath": "_content/EmployeeTaskManagementAPI",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "D:\\EmployeeTaskManagementAPI\\wwwroot\\index.html",
+      "SourceId": "EmployeeTaskManagementAPI",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\EmployeeTaskManagementAPI\\wwwroot\\",
+      "BasePath": "_content/EmployeeTaskManagementAPI",
+      "RelativePath": "index.html",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\index.html"
+    }
+  ]
+}

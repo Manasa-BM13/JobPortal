@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Job Portal</title>
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --card: #ffffff;
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --border: #e5e7eb;
+      --success: #10b981;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .topbar {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      padding: 24px 20px;
+      border-radius: 16px;
+      margin-bottom: 24px;
+    }
+
+    h1, h2, h3, p { margin-top: 0; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 24px;
+    }
+
+    .panel {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
+    }
+
+    .job-card {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px;
+      margin-bottom: 16px;
+      background: #fff;
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 12px 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .tag {
+      background: #dbeafe;
+      color: #1d4ed8;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin: 12px 0 6px;
+    }
+
+    input, textarea, select, button {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      font-size: 14px;
+    }
+
+    textarea {
+      min-height: 110px;
+      resize: vertical;
+    }
+
+    button {
+      margin-top: 14px;
+      border: none;
+      background: var(--primary);
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    button:hover {
+      background: var(--primary-dark);
+    }
+
+    .application-list {
+      margin-top: 20px;
+    }
+
+    .application-item {
+      border-top: 1px solid var(--border);
+      padding-top: 12px;
+      margin-top: 12px;
+    }
+
+    .success {
+      color: var(--success);
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="topbar">
+      <h1>Job Portal</h1>
+      <p>Find new opportunities and apply in minutes.</p>
+    </div>
+
+    <div class="grid">
+      <section class="panel">
+        <h2>Open Jobs</h2>
+        <div id="jobsContainer"></div>
+      </section>
+
+      <aside class="panel">
+        <h2>Post a Job</h2>
+        <form id="jobForm">
+          <label>Title</label>
+          <input id="jobTitle" placeholder="Senior .NET Developer" required />
+
+          <label>Company</label>
+          <input id="jobCompany" placeholder="Acme Tech" required />
+
+          <label>Location</label>
+          <input id="jobLocation" placeholder="Remote / Bengaluru" required />
+
+          <label>Type</label>
+          <select id="jobType">
+            <option>Full-time</option>
+            <option>Part-time</option>
+            <option>Contract</option>
+            <option>Remote</option>
+          </select>
+
+          <label>Category</label>
+          <input id="jobCategory" placeholder="Software Development" required />
+
+          <label>Description</label>
+          <textarea id="jobDescription" placeholder="Describe the role" required></textarea>
+
+          <label>Requirements</label>
+          <textarea id="jobRequirements" placeholder="Required skills and experience" required></textarea>
+
+          <label>Salary</label>
+          <input id="jobSalary" type="number" placeholder="1500000" required />
+
+          <button type="submit">Publish Job</button>
+        </form>
+      </aside>
+    </div>
+
+    <section class="panel" style="margin-top: 24px;">
+      <h2>Recent Applications</h2>
+      <div id="applicationsContainer" class="application-list"></div>
+    </section>
+  </div>
+
+  <script>
+    const jobsContainer = document.getElementById('jobsContainer');
+    const applicationsContainer = document.getElementById('applicationsContainer');
+
+    async function loadJobs() {
+      const jobs = await fetch('/api/jobs').then(r => r.json());
+
+      jobsContainer.innerHTML = jobs.map(job => `
+        <div class="job-card">
+          <h3>${job.title}</h3>
+          <div class="meta">
+            <span class="tag">${job.company}</span>
+            <span>${job.location}</span>
+            <span>${job.type}</span>
+            <span>${job.category}</span>
+          </div>
+          <p>${job.description}</p>
+          <p><strong>Requirements:</strong> ${job.requirements}</p>
+          <p><strong>Salary:</strong> ₹${Number(job.salary).toLocaleString('en-IN')}</p>
+
+          <form class="apply-form" data-job-id="${job.id}">
+            <input name="applicantName" placeholder="Your name" required />
+            <input name="email" type="email" placeholder="Email" required />
+            <input name="phone" placeholder="Phone" required />
+            <textarea name="resumeSummary" placeholder="Tell us about yourself" required></textarea>
+            <input name="portfolioUrl" placeholder="Portfolio/LinkedIn URL" />
+            <button type="submit">Apply Now</button>
+          </form>
+        </div>
+      `).join('');
+
+      document.querySelectorAll('.apply-form').forEach(form => {
+        form.addEventListener('submit', async (event) => {
+          event.preventDefault();
+          const jobId = Number(form.dataset.jobId);
+          const payload = {
+            jobId,
+            applicantName: form.applicantName.value,
+            email: form.email.value,
+            phone: form.phone.value,
+            resumeSummary: form.resumeSummary.value,
+            portfolioUrl: form.portfolioUrl.value
+          };
+
+          await fetch('/api/applications', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+
+          form.reset();
+          loadApplications();
+          alert('Application submitted successfully!');
+        });
+      });
+    }
+
+    async function loadApplications() {
+      const apps = await fetch('/api/applications').then(r => r.json());
+
+      applicationsContainer.innerHTML = apps.length === 0
+        ? '<p>No applications yet.</p>'
+        : apps.map(app => `
+            <div class="application-item">
+              <strong>${app.applicantName}</strong> applied for <strong>${app.job?.title ?? 'Job'}</strong>
+              <div class="meta">
+                <span>${app.email}</span>
+                <span>${app.status}</span>
+              </div>
+            </div>
+          `).join('');
+    }
+
+    document.getElementById('jobForm').addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      const payload = {
+        title: document.getElementById('jobTitle').value,
+        company: document.getElementById('jobCompany').value,
+        location: document.getElementById('jobLocation').value,
+        type: document.getElementById('jobType').value,
+        category: document.getElementById('jobCategory').value,
+        description: document.getElementById('jobDescription').value,
+        requirements: document.getElementById('jobRequirements').value,
+        salary: Number(document.getElementById('jobSalary').value)
+      };
+
+      await fetch('/api/jobs', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      event.target.reset();
+      loadJobs();
+    });
+
+    loadJobs();
+    loadApplications();
+  </script>
+</body>
+</html>
